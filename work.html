@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — li:St li/st [li]st</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page">
+
+  <header class="site-header">
+    <a class="logo" href="index.html">li:St</a>
+    <nav>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link active" href="works.html">Works</a>
+    </nav>
+  </header>
+
+  <div style="height:96px"></div>
+
+  <div class="work-detail">
+    <a class="back-link" href="works.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Works
+    </a>
+
+    <div class="work-detail-layout" id="detail"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const id = Number(new URLSearchParams(location.search).get('id'));
+    const w  = WORKS.find(x => x.id === id);
+
+    if (!w) {
+      document.getElementById('detail').innerHTML =
+        '<p style="color:var(--muted)">작업을 찾을 수 없습니다.</p>';
+    } else {
+      document.title = w.title + ' — li:St li/st [li]st';
+      document.getElementById('detail').innerHTML = `
+        <div class="work-detail-thumb" data-initials="${w.artist.slice(0, 2)}"></div>
+        <div>
+          <h1 class="detail-title">${w.title}</h1>
+          <p class="detail-artist">${w.artist}</p>
+          <p class="detail-desc">${w.desc}</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

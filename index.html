@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>li:St li/st [li]st</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="index">
+
+  <header class="site-header">
+    <a class="logo" href="index.html">li:St</a>
+    <nav>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link" href="works.html">Works</a>
+    </nav>
+  </header>
+
+  <canvas id="c"></canvas>
+
+  <script>
+    if (Math.random() < 0.5) {
+      const m = document.createElement('script');
+      m.src = 'addons/matter.js';
+      m.onload = () => {
+        const s = document.createElement('script');
+        s.src = 'sketch.js';
+        document.body.appendChild(s);
+      };
+      document.body.appendChild(m);
+    } else {
+      const s = document.createElement('script');
+      s.src = 'sketch2.js';
+      document.body.appendChild(s);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg:    #0d0d1a;
+  --text:  #e8e8e0;
+  --muted: #b2aa94;
+  --lime:  #cade38;
+  --dim:   #3b5e6c;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Helvetica Neue', Arial, 'Noto Sans KR', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+body.page {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+canvas {
+  display: block;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+/* ── header ───────────────────────────────────── */
+
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 40px;
+  pointer-events: none;
+}
+
+.site-header .logo {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--lime);
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 32px;
+  pointer-events: auto;
+}
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 900;
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.15s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--lime);
+}
+
+/* ── about ────────────────────────────────────── */
+
+.about-hero {
+  padding: 20px 40px 56px;
+}
+
+.about-hero h1 {
+  font-size: clamp(80px, 14vw, 210px);
+  font-weight: 900;
+  color: var(--lime);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  margin-bottom: 36px;
+}
+
+.about-hero .meta {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 32px;
+}
+
+.about-statement {
+  padding: 64px 40px 48px;
+  max-width: 720px;
+}
+
+.about-statement p {
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 400;
+  line-height: 1.95;
+  color: var(--text);
+  word-break: keep-all;
+}
+
+.about-statement p + p {
+  margin-top: 1.4em;
+}
+
+.about-cta {
+  padding: 16px 40px 100px;
+}
+
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--lime);
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+
+.cta-link:hover {
+  gap: 22px;
+}
+
+/* ── works ────────────────────────────────────── */
+
+.works-page-title {
+  padding: 20px 40px 48px;
+}
+
+.works-page-title h1 {
+  font-size: clamp(80px, 14vw, 210px);
+  font-weight: 900;
+  color: var(--text);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+}
+
+.works-list {
+  padding-bottom: 100px;
+}
+
+.work-item {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0 16px;
+  align-items: baseline;
+  padding: 20px 40px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.12s;
+}
+
+.work-item:hover {
+  background: rgba(202, 222, 56, 0.04);
+}
+
+.work-item:hover .item-num {
+  color: var(--lime);
+}
+
+.item-num {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--dim);
+  transition: color 0.12s;
+  padding-top: 4px;
+  align-self: start;
+}
+
+.item-title {
+  font-size: clamp(22px, 3vw, 38px);
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.item-artist {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ── work detail ──────────────────────────────── */
+
+.work-detail {
+  padding: 32px 40px 100px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 900;
+  text-decoration: none;
+  color: var(--muted);
+  margin-bottom: 60px;
+  transition: color 0.12s;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+.work-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.work-detail-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--dim);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.work-detail-thumb::after {
+  content: attr(data-initials);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  font-weight: 900;
+  color: rgba(232, 232, 224, 0.07);
+}
+
+.detail-title {
+  font-size: clamp(32px, 4.5vw, 64px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin-bottom: 12px;
+}
+
+.detail-artist {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-bottom: 52px;
+}
+
+.detail-desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--text);
+  word-break: keep-all;
+}
+
+/* ── responsive ───────────────────────────────── */
+
+@media (max-width: 680px) {
+  .site-header { padding: 20px 24px; }
+
+  .about-hero,
+  .about-statement,
+  .about-cta,
+  .works-page-title,
+  .work-detail {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .work-item {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .work-detail-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
