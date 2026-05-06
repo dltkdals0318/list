@@ -1,25 +1,44 @@
-*, *::before, *::after {
+@font-face {
+  font-family: "MinBuri";
+  src: url("addons/AG_Choijeongho_Minburi_Std_Bold.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 :root {
-  --bg:    #0d0d1a;
-  --text:  #e8e8e0;
-  --muted: #b2aa94;
-  --lime:  #cade38;
-  --dim:   #3b5e6c;
+  --bg: #000000;
+  --text: #e8e8e0;
+  --muted: #c7c4ba;
+  --lime: #dfe43b;
+  --blue: #2e77a8;
+  --green: #1db4a5;
 }
 
-html, body {
+::selection,
+::-moz-selection {
+  background: #dfe43b;
+  color: #000000;
+}
+
+html,
+body {
   width: 100%;
   height: 100%;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Helvetica Neue', Arial, 'Noto Sans KR', sans-serif;
+  font-family: "MinBuri", sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 body.page {
@@ -30,25 +49,82 @@ body.page {
 canvas {
   display: block;
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* ── header ───────────────────────────────────── */
+/* ── index: 전시 정보 블록 ─────────────────────── */
+
+.info-block {
+  position: fixed;
+  z-index: 100;
+  left: 40px;
+  top: 140px;
+  transform: rotate(-20deg);
+  transform-origin: left top;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.info-block span {
+  display: block;
+  font-family: "MinBuri", sans-serif;
+  font-weight: 900;
+  line-height: 1.15;
+  font-size: clamp(23px, 2.6vw, 38px);
+  color: var(--text);
+}
+
+/* ── index: About / Works 내비게이션 블록 ─────── */
+
+.page-nav {
+  position: fixed;
+  z-index: 100;
+  right: 52px;
+  top: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.page-nav a {
+  display: block;
+  text-decoration: none;
+  font-family: "MinBuri", sans-serif;
+  font-weight: 900;
+  line-height: 1.15;
+  font-size: clamp(23px, 2.6vw, 38px);
+  color: var(--text);
+  transition: color 0.15s;
+}
+
+.page-nav a:hover {
+  color: var(--lime);
+}
+
+/* ── header (about / works pages) ─────────────── */
 
 .site-header {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 40px;
+  padding: 32px 40px;
   pointer-events: none;
 }
 
 .site-header .logo {
-  font-size: 18px;
+  font-size: clamp(20px, 2.6vw, 38px);
   font-weight: 900;
   color: var(--lime);
   text-decoration: none;
@@ -57,12 +133,12 @@ canvas {
 
 .site-header nav {
   display: flex;
-  gap: 32px;
+  gap: 36px;
   pointer-events: auto;
 }
 
 .nav-link {
-  font-size: 14px;
+  font-size: clamp(15px, 2.1vw, 30px);
   font-weight: 900;
   text-decoration: none;
   color: var(--text);
@@ -77,139 +153,115 @@ canvas {
 /* ── about ────────────────────────────────────── */
 
 .about-hero {
-  padding: 20px 40px 56px;
+  padding: 40px 40px clamp(80px, 10vw, 180px);
+  text-align: center;
 }
 
 .about-hero h1 {
-  font-size: clamp(80px, 14vw, 210px);
+  display: inline-block;
+  font-size: clamp(27px, 4.1vw, 60px);
   font-weight: 900;
   color: var(--lime);
-  line-height: 0.88;
-  letter-spacing: -0.03em;
-  margin-bottom: 36px;
-}
-
-.about-hero .meta {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 32px;
+  line-height: 1.05;
+  transform: rotate(-10deg);
+  transform-origin: center top;
 }
 
 .about-statement {
-  padding: 64px 40px 48px;
-  max-width: 720px;
+  padding: 32px 40px 48px;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .about-statement p {
-  font-size: clamp(16px, 1.8vw, 20px);
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 400;
-  line-height: 1.95;
+  line-height: 2;
   color: var(--text);
   word-break: keep-all;
 }
 
 .about-statement p + p {
-  margin-top: 1.4em;
-}
-
-.about-cta {
-  padding: 16px 40px 100px;
-}
-
-.cta-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 16px;
-  font-weight: 900;
-  color: var(--lime);
-  text-decoration: none;
-  transition: gap 0.2s;
-}
-
-.cta-link:hover {
-  gap: 22px;
+  margin-top: 1.6em;
 }
 
 /* ── works ────────────────────────────────────── */
 
 .works-page-title {
-  padding: 20px 40px 48px;
+  padding: 110px 40px clamp(50px, 8vw, 120px);
 }
 
 .works-page-title h1 {
-  font-size: clamp(80px, 14vw, 210px);
+  display: inline-block;
+  font-size: clamp(27px, 4.1vw, 60px);
   font-weight: 900;
   color: var(--text);
-  line-height: 0.88;
-  letter-spacing: -0.03em;
+  line-height: 1;
+  transform: rotate(-20deg);
+  transform-origin: left top;
 }
 
 .works-list {
-  padding-bottom: 100px;
+  padding-bottom: 120px;
 }
 
 .work-item {
   display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: 0 16px;
+  grid-template-columns: 52px 1fr auto;
+  gap: 0 20px;
   align-items: baseline;
-  padding: 20px 40px;
+  padding: 16px 40px;
   text-decoration: none;
   color: inherit;
-  transition: background 0.12s;
 }
 
-.work-item:hover {
-  background: rgba(202, 222, 56, 0.04);
-}
-
-.work-item:hover .item-num {
+.work-item:hover .item-num,
+.work-item:hover .item-title,
+.work-item:hover .item-artist {
   color: var(--lime);
 }
 
 .item-num {
-  font-size: 13px;
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 900;
-  color: var(--dim);
+  color: var(--text);
   transition: color 0.12s;
   padding-top: 4px;
   align-self: start;
 }
 
 .item-title {
-  font-size: clamp(22px, 3vw, 38px);
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 900;
   color: var(--text);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.05;
+  transition: color 0.12s;
 }
 
 .item-artist {
-  font-size: 13px;
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 400;
   color: var(--muted);
-  margin-top: 4px;
+  text-align: right;
+  transition: color 0.12s;
 }
 
 /* ── work detail ──────────────────────────────── */
 
 .work-detail {
-  padding: 32px 40px 100px;
+  padding: 32px 40px 120px;
 }
 
 .back-link {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 900;
   text-decoration: none;
   color: var(--muted);
-  margin-bottom: 60px;
+  margin-bottom: 72px;
   transition: color 0.12s;
 }
 
@@ -220,14 +272,14 @@ canvas {
 .work-detail-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  gap: 72px;
   align-items: start;
 }
 
 .work-detail-thumb {
   width: 100%;
   aspect-ratio: 4 / 3;
-  background: var(--dim);
+  background: var(--blue);
   border-radius: 4px;
   position: relative;
   overflow: hidden;
@@ -246,24 +298,23 @@ canvas {
 }
 
 .detail-title {
-  font-size: clamp(32px, 4.5vw, 64px);
+  font-size: clamp(21px, 3vw, 42px);
   font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.0;
-  margin-bottom: 12px;
+  line-height: 1;
+  margin-bottom: 14px;
 }
 
 .detail-artist {
-  font-size: 15px;
-  font-weight: 400;
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 900;
   color: var(--muted);
-  margin-bottom: 52px;
+  margin-bottom: 56px;
 }
 
 .detail-desc {
-  font-size: 16px;
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 400;
-  line-height: 1.9;
+  line-height: 2;
   color: var(--text);
   word-break: keep-all;
 }
@@ -271,11 +322,12 @@ canvas {
 /* ── responsive ───────────────────────────────── */
 
 @media (max-width: 680px) {
-  .site-header { padding: 20px 24px; }
+  .site-header {
+    padding: 20px 24px;
+  }
 
   .about-hero,
   .about-statement,
-  .about-cta,
   .works-page-title,
   .work-detail {
     padding-left: 24px;
@@ -283,12 +335,13 @@ canvas {
   }
 
   .work-item {
+    grid-template-columns: 40px 1fr auto;
     padding-left: 24px;
     padding-right: 24px;
   }
 
   .work-detail-layout {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 40px;
   }
 }

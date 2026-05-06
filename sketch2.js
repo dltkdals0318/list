@@ -1,7 +1,7 @@
 const W = window.innerWidth;
 const H = window.innerHeight;
-const CX = W / 2;
-const CY = H / 2;
+const CX = W / 2 + 100;
+const CY = H / 2 + 160;
 
 const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
@@ -16,45 +16,35 @@ ctx.scale(dpr, dpr);
 
 // config
 
-const maxR = Math.min(W, H) * 0.48;
+const maxR = Math.min(W, H) * 0.576;
 const centerR = maxR * 0.11;
 const ringW = (maxR - centerR) / 5;
 
 const RINGS = [
+  { color: "#dfe43b", text: "li:st  li/st  [li]st  ", speed: 0.00016, dir: 1 },
   {
-    color: "#cade38",
-    text: "li:St  li/st  [li]st  ",
-    speed: 0.00016,
-    dir: 1,
-    reps: 3,
-  },
-  {
-    color: "#b2aa94",
+    color: "#c7c4ba",
     text: "proto spring exhibition:  ",
     speed: 0.00022,
     dir: -1,
-    reps: 1,
   },
   {
-    color: "#3b5e6c",
+    color: "#2e77a8",
     text: "11(mon) - 16(fri) May 2026  R7F central & west gallery  ",
     speed: 0.00028,
     dir: 1,
-    reps: 1,
   },
   {
-    color: "#4e7880",
-    text: "목록은 단순한 정보의 나열이 아닌,  ",
+    color: "#1db4a5",
+    text: "목록은 단순한 정보의 나열이 아닌, 세계를 이해하는 하나의 방식이다.  ",
     speed: 0.00036,
     dir: -1,
-    reps: 1,
   },
   {
-    color: "#cade38",
-    text: "세계를 이해하는 방식이다.",
+    color: "#dfe43b",
+    text: "각각의 항목은 보이지 않는 지배 논리 속에서...  ",
     speed: 0.00044,
     dir: 1,
-    reps: 1,
   },
 ];
 
@@ -65,8 +55,6 @@ RINGS.forEach((ring, i) => {
   ring.userOffset = 0;
   ring.angularVel = 0;
   ring.velSamples = [];
-
-  ring.fullText = ring.text.repeat(ring.reps);
 });
 
 // interaction — drag each ring independently
@@ -85,6 +73,7 @@ function getRingAt(x, y) {
 }
 
 function onDown(x, y) {
+  hintActive = false;
   activeRing = getRingAt(x, y);
   if (!activeRing) return;
   prevAngle = pointerAngle(x, y);
@@ -148,25 +137,90 @@ window.addEventListener(
 );
 window.addEventListener("touchend", () => onUp());
 
+// hint
+
+let hintAlpha = 1;
+let hintActive = true;
+let _hintCache = null;
+
+function drawHintArc() {
+  if (hintAlpha <= 0) return;
+  const hintR = maxR + ringW * 0.55;
+  const text = "Scroll me!";
+  const fontSize = Math.max(10, ringW * 0.36);
+  ctx.font = `900 ${fontSize}px MinBuri`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  if (!_hintCache) {
+    const chars = Array.from(text);
+    const steps = chars.map((ch) => ctx.measureText(ch).width / hintR);
+    const totalAngle = steps.reduce((s, v) => s + v, 0);
+    const startAngle = Math.PI / 4 - totalAngle / 2;
+    _hintCache = { chars, steps, startAngle };
+  }
+
+  const { chars, steps, startAngle } = _hintCache;
+  ctx.globalAlpha = hintAlpha;
+  ctx.fillStyle = "#e8e8e0";
+
+  let angle = startAngle;
+  for (let i = 0; i < chars.length; i++) {
+    ctx.save();
+    ctx.translate(CX, CY);
+    ctx.rotate(angle + steps[i] / 2);
+    ctx.translate(0, -hintR);
+    ctx.fillText(chars[i], 0, 0);
+    ctx.restore();
+    angle += steps[i];
+  }
+  ctx.globalAlpha = 1;
+}
+
 // render
 
 function drawArcText(ring, startAngle) {
   const fontSize = Math.max(12, ringW * 0.58);
-  ctx.font = `900 ${fontSize}px sans-serif`;
+  ctx.font = `900 ${fontSize}px MinBuri`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillStyle = "#000000";
 
-  let angle = startAngle;
-  for (const char of ring.fullText) {
-    const step = ctx.measureText(char).width / ring.midR;
-    ctx.save();
-    ctx.translate(CX, CY);
-    ctx.rotate(angle + (ring.dir * step) / 2);
-    ctx.translate(0, -ring.midR);
-    ctx.fillText(char, 0, 0);
-    ctx.restore();
-    angle += ring.dir * step;
+  const TWO_PI = 2 * Math.PI;
+
+  if (!ring._ready) {
+    const chars = Array.from(ring.text);
+    ring._chars = chars;
+    ring._charSteps = chars.map((ch) => ctx.measureText(ch).width / ring.midR);
+    const textAngle = ring._charSteps.reduce((s, v) => s + v, 0);
+    ring._numCopies =
+      textAngle >= TWO_PI
+        ? 1
+        : Math.min(3, Math.max(1, Math.floor(TWO_PI / textAngle)));
+    ring._slotAngle = TWO_PI / ring._numCopies;
+    ring._ready = true;
+  }
+
+  const maxAngle = ring._numCopies === 1 ? TWO_PI : ring._slotAngle;
+
+  for (let c = 0; c < ring._numCopies; c++) {
+    let angle = startAngle + c * ring._slotAngle;
+    let drawn = 0;
+
+    for (let i = 0; i < ring._chars.length; i++) {
+      const step = ring._charSteps[i];
+      if (drawn + step > maxAngle + 1e-6) break;
+
+      ctx.save();
+      ctx.translate(CX, CY);
+      ctx.rotate(angle + step / 2);
+      ctx.translate(0, -ring.midR);
+      ctx.fillText(ring._chars[i], 0, 0);
+      ctx.restore();
+
+      angle += step;
+      drawn += step;
+    }
   }
 }
 
@@ -189,7 +243,11 @@ function render(ts) {
     if (Math.abs(ring.angularVel) < 0.000001) ring.angularVel = 0;
   }
 
-  ctx.fillStyle = "#0d0d1a";
+  if (!hintActive && hintAlpha > 0) {
+    hintAlpha = Math.max(0, hintAlpha - dt / 600);
+  }
+
+  ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, W, H);
 
   for (const ring of RINGS) {
@@ -202,12 +260,14 @@ function render(ts) {
     drawArcText(ring, ring.dir * elapsed * ring.speed + ring.userOffset);
   }
 
+  drawHintArc();
+
   ctx.beginPath();
   ctx.arc(CX, CY, centerR, 0, Math.PI * 2);
-  ctx.fillStyle = "#0d0d1a";
+  ctx.fillStyle = "#000000";
   ctx.fill();
 
   requestAnimationFrame(render);
 }
 
-requestAnimationFrame(render);
+document.fonts.ready.then(() => requestAnimationFrame(render));

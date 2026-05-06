@@ -1,38 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>li:St li/st [li]st</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="index">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>li:st li/st [li]st</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="index">
+    <!-- 전시 정보 블록 (좌상단) -->
+    <div class="info-block">
+      <span>li:st li/st [li]st</span><br />
+      <span>R7F central&amp; west gallery</span>
+      <span>11(mon)-16(fri)</span>
+    </div>
 
-  <header class="site-header">
-    <a class="logo" href="index.html">li:St</a>
-    <nav>
-      <a class="nav-link" href="about.html">About</a>
-      <a class="nav-link" href="works.html">Works</a>
+    <!-- About / Works 내비게이션 블록 (우하단) -->
+    <nav class="page-nav">
+      <a href="about.html">About</a>
+      <a href="works.html">Works</a>
     </nav>
-  </header>
 
-  <canvas id="c"></canvas>
+    <canvas id="c"></canvas>
 
-  <script>
-    if (Math.random() < 0.5) {
-      const m = document.createElement('script');
-      m.src = 'addons/matter.js';
-      m.onload = () => {
-        const s = document.createElement('script');
-        s.src = 'sketch.js';
+    <script>
+      if (Math.random() < 0.5) {
+        const m = document.createElement("script");
+        m.src = "addons/matter.js";
+        m.onload = () => {
+          const s = document.createElement("script");
+          s.src = "sketch.js";
+          document.body.appendChild(s);
+        };
+        document.body.appendChild(m);
+      } else {
+        const s = document.createElement("script");
+        s.src = "sketch2.js";
         document.body.appendChild(s);
-      };
-      document.body.appendChild(m);
-    } else {
-      const s = document.createElement('script');
-      s.src = 'sketch2.js';
-      document.body.appendChild(s);
-    }
-  </script>
-</body>
+      }
+    </script>
+  </body>
 </html>

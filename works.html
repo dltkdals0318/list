@@ -1,43 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Works — li:St li/st [li]st</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="page">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Works — li:st li/st [li]st</title>
+    <style>
+@font-face { font-family:"MinBuri"; src:url("addons/AG_Choijeongho_Minburi_Std_Bold.otf") format("opentype"); font-weight:900; font-style:normal; }
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+:root { --bg:#000000; --text:#e8e8e0; --muted:#c7c4ba; --lime:#dfe43b; --blue:#2e77a8; --green:#1db4a5; }
+::selection,::-moz-selection { background:#dfe43b; color:#000000; }
+html,body { width:100%; height:100%; background:var(--bg); color:var(--text); font-family:"MinBuri",sans-serif; -webkit-font-smoothing:antialiased; overflow:hidden; hyphens:none; -webkit-hyphens:none; }
+body.page { overflow-y:auto; overflow-x:hidden; }
+.site-header { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:32px 40px; pointer-events:none; }
+.site-header .logo { font-size:clamp(20px,2.6vw,38px); font-weight:900; color:var(--lime); text-decoration:none; pointer-events:auto; }
+.site-header nav { display:flex; gap:36px; pointer-events:auto; }
+.nav-link { font-size:clamp(15px,2.1vw,30px); font-weight:900; text-decoration:none; color:var(--text); transition:color 0.15s; }
+.nav-link:hover,.nav-link.active { color:var(--lime); }
+.works-page-title { padding:110px 40px clamp(50px,8vw,120px); }
+.works-page-title h1 { display:inline-block; font-size:clamp(27px,4.1vw,60px); font-weight:900; color:var(--text); line-height:1; transform:rotate(-20deg); transform-origin:left top; }
+.works-list { padding-bottom:120px; }
+.work-item { display:grid; grid-template-columns:52px 1fr auto; gap:0 20px; align-items:baseline; padding:16px 40px; text-decoration:none; color:inherit; }
+.work-item:hover .item-num,.work-item:hover .item-title,.work-item:hover .item-artist { color:var(--lime); }
+.item-num { font-size:clamp(18px,1.5vw,22px); font-weight:900; color:var(--text); transition:color 0.12s; padding-top:4px; align-self:start; }
+.item-title { font-size:clamp(18px,1.5vw,22px); font-weight:900; color:var(--text); line-height:1.05; transition:color 0.12s; }
+.item-artist { font-size:clamp(18px,1.5vw,22px); font-weight:400; color:var(--muted); text-align:right; transition:color 0.12s; }
+@media (max-width:680px) {
+  .site-header { padding:20px 24px; }
+  .works-page-title { padding-left:24px; padding-right:24px; }
+  .work-item { grid-template-columns:40px 1fr auto; padding-left:24px; padding-right:24px; }
+}
+    </style>
+  </head>
+  <body class="page">
+    <header class="site-header">
+      <a class="logo" href="index.html">li:st li/st [li]st</a>
+      <nav>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link active" href="works.html">Works</a>
+      </nav>
+    </header>
 
-  <header class="site-header">
-    <a class="logo" href="index.html">li:St</a>
-    <nav>
-      <a class="nav-link" href="about.html">About</a>
-      <a class="nav-link active" href="works.html">Works</a>
-    </nav>
-  </header>
+    <div style="height: 96px"></div>
 
-  <div style="height:96px"></div>
+    <div class="works-page-title">
+      <h1>Works</h1>
+    </div>
 
-  <div class="works-page-title">
-    <h1>Works</h1>
-  </div>
+    <div class="works-list" id="list"></div>
 
-  <div class="works-list" id="list"></div>
+    <script>
+const WORKS = [
+  { id:  1, artist: '김하은',  title: '약품 목록 #1',           zone: 'Central A', desc: '목록은 단순한 산물의 나열이 아니다. 이 작업은 일상 속 약품의 이름들을 수집하여 그것이 가진 언어적 구조와 물질적 속성 사이의 간극을 탐구한다. 각각의 약품 이름은 하나의 기호이자 동시에 몸의 역사다.' },
+  { id:  2, artist: '박준서',  title: '우리 속에서',              zone: 'Central B', desc: '우리가 공유하는 공간 안에서 각 개인이 점유하는 방식을 시각화한다. 군집과 개체, 규칙과 이탈 사이에서 생성되는 패턴을 드로잉과 설치로 풀어냈다.' },
+  { id:  3, artist: '이지민',  title: '[li]st — 이야기의 방식',  zone: 'West A',    desc: '배사 극위의 시이를 이야이의 방식으로 기록한다. 목록이라는 형식을 빌려 개인의 서사를 재구성하는 작업. 도면 위에 쌓이는 텍스트 레이어들은 기억의 지층을 형성한다.' },
+  { id:  4, artist: '최예린',  title: 'li/st — 분절',            zone: 'West B',    desc: '슬래시(/)로 나뉘는 단어처럼 우리의 정체성도 문맥에 따라 분절된다. 반복되는 기호와 패턴 속에서 일관성을 찾으려는 시도와 그 실패를 기록한 작업.' },
+  { id:  5, artist: '정수현',  title: 'li:st — 콜론의 자리',     zone: 'Central C', desc: '콜론(:)이 가리키는 것과 가리켜지는 것 사이의 관계. 정의하는 행위 자체가 어떻게 대상을 변형시키는지를 텍스트 기반 설치로 탐구한다.' },
+  { id:  6, artist: '윤도현',  title: '목록의 끝',               zone: 'West C',    desc: '어떤 목록도 완결되지 않는다. 이 작업은 미완의 목록들, 중단된 수집들, 잊혀진 항목들을 모아 하나의 아카이브를 구성한다. 끝맺지 못한 것들의 연대.' },
+  { id:  7, artist: '한소희',  title: '나열하는 몸',              zone: 'West D',    desc: '신체 동작을 목록의 언어로 번역한다. 반복되는 제스처와 그 사이의 멈춤—몸이 스스로를 기록하는 방식을 영상과 퍼포먼스로 탐색한다.' },
+  { id:  8, artist: '강민준',  title: '색인 (索引)',              zone: 'Central D', desc: '색인은 찾기 위한 목록이다. 그러나 색인이 가리키는 대상이 이미 사라졌을 때, 남은 것은 순수한 형식뿐이다. 빈 색인을 만드는 작업.' },
+  { id:  9, artist: '오예진',  title: '연속과 단절',              zone: 'West E',    desc: '하나의 목록 안에서 항목들은 연속되는 것처럼 보이지만, 각각은 분리된 사건이다. 이 작업은 그 간극—보이지 않는 단절들을 조각과 사진으로 드러낸다.' },
+  { id: 10, artist: '서재원',  title: '항목들 사이에서',          zone: 'Central E', desc: '목록의 항목들 사이에 존재하는 공백. 기록되지 않은 것들, 번호를 부여받지 못한 것들에 대한 탐구. 그 사이를 걷는 행위를 드로잉으로 기록했다.' },
+  { id: 11, artist: '임채린',  title: '잔여 목록',               zone: 'West F',    desc: '쇼핑 목록, 할 일 목록, 연락처 목록—사용 후 남겨진 목록들을 수집한다. 완료된 항목 위에 그어진 선들이 만드는 패턴, 버려진 기록들의 초상.' },
+  { id: 12, artist: '홍지수',  title: '재고 (在庫)',              zone: 'Central F', desc: '재고 조사는 현재를 세는 행위다. 이 작업은 감정, 기억, 관계를 재고 리스트로 작성하는 시도—측정할 수 없는 것을 측정하려는 불가능한 목록.' },
+  { id: 13, artist: '노은서',  title: '불완전한 아카이브',        zone: 'West G',    desc: '완전한 아카이브는 존재하지 않는다. 수집하는 행위 자체가 선택이고 배제다. 무엇이 기록되고 무엇이 누락되는가—그 선택의 정치학을 가시화하는 설치 작업.' },
+  { id: 14, artist: '백승우',  title: '목록 외',                 zone: 'Central G', desc: '목록에 포함될 수 없는 것들. 분류를 거부하는 존재들, 카테고리 바깥의 항목들. 이것들을 어떻게 기록할 수 있는가에 대한 질문으로 이루어진 작업.' },
+  { id: 15, artist: '장예은',  title: '순서 없이',               zone: 'Central H', desc: '목록은 순서를 전제한다. 그러나 기억은 순서를 따르지 않는다. 시간적 순서를 해체하고 재배열하는 작업—목록 형식에 저항하는 또 다른 목록.' },
+];
 
-  <script src="data.js"></script>
-  <script>
-    const list = document.getElementById('list');
-    WORKS.forEach((w, i) => {
-      list.insertAdjacentHTML('beforeend', `
-        <a class="work-item" href="work.html?id=${w.id}">
-          <span class="item-num">${String(i + 1).padStart(2, '0')}</span>
-          <div>
-            <p class="item-title">${w.title}</p>
-            <p class="item-artist">${w.artist}</p>
-          </div>
-        </a>
-      `);
-    });
-  </script>
-</body>
+const list = document.getElementById("list");
+WORKS.forEach((w, i) => {
+  list.insertAdjacentHTML(
+    "beforeend",
+    `
+    <a class="work-item" href="work.html?id=${w.id}">
+      <span class="item-num">${String(i + 1).padStart(2, "0")}</span>
+      <p class="item-title">${w.title}</p>
+      <p class="item-artist">${w.artist}</p>
+    </a>
+  `,
+  );
+});
+    </script>
+  </body>
 </html>

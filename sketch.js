@@ -12,11 +12,11 @@ const LEVELS = [
   { radius: 300 },
 ];
 const MAX_LEVEL = LEVELS.length - 1;
-const RING_COLORS = ["#0d2080", "#4a7a6a", "#b8f030"];
+const RING_COLORS = ["#2e77a8", "#1db4a5", "#dfe43b"];
 const MERGE_COOLDOWN = 10;
 const SPAWN_INTERVAL = 200;
 const SPAWN_LEVEL = 0;
-const PHYS_SCALE = 0.85; // physics body = fill의 55% → fill이 겹쳐 merged 효과 생성
+const PHYS_SCALE = 0.85;
 
 function physR(level) {
   return LEVELS[level].radius * PHYS_SCALE;
@@ -141,6 +141,9 @@ let mouseX = 0;
 let mouseY = 0;
 let spawnTimer = null;
 
+let hintAlpha = 1;
+let hintFadeStart = null;
+
 function toCanvasCoords(clientX, clientY) {
   const rect = canvas.getBoundingClientRect();
   return { x: clientX - rect.left, y: clientY - rect.top };
@@ -155,6 +158,7 @@ function spawnAtMouse() {
 }
 
 function startSpawn(clientX, clientY) {
+  if (!hintFadeStart && hintAlpha > 0) hintFadeStart = Date.now();
   ({ x: mouseX, y: mouseY } = toCanvasCoords(clientX, clientY));
   isHolding = true;
   spawnAtMouse();
@@ -196,7 +200,6 @@ window.addEventListener("touchend", () => stopSpawn());
 function render() {
   const now = Date.now();
 
-  // drawR 계산
   const circles = [];
   for (const body of Composite.allBodies(engine.world)) {
     if (body.isStatic || body.label !== "circle") continue;
@@ -212,12 +215,9 @@ function render() {
     circles.push({ x: body.position.x, y: body.position.y, drawR });
   }
 
-  ctx.fillStyle = "#0d0d1a";
+  ctx.fillStyle = "#000000";
   ctx.fillRect(0, 0, W, H);
 
-  // 바깥 색부터 안쪽 색 순으로 filled blob을 쌓음
-  // 각 pass에서 모든 원을 같은 색으로 그리면 겹친 원이 하나의 blob으로 합쳐짐
-  // → 선이 끊기지 않고 이어지는 unified outline 효과
   const passes = [
     { offset: 3, color: RING_COLORS[2] },
     { offset: 2, color: RING_COLORS[1] },
@@ -232,6 +232,17 @@ function render() {
       ctx.arc(x, y, drawR + offset * RING_WIDTH, 0, Math.PI * 2);
       ctx.fill();
     }
+  }
+
+  if (hintAlpha > 0) {
+    if (hintFadeStart) hintAlpha = Math.max(0, 1 - (Date.now() - hintFadeStart) / 600);
+    ctx.globalAlpha = hintAlpha;
+    ctx.fillStyle = "#e8e8e0";
+    ctx.font = `900 ${Math.min(32, Math.max(18, W * 0.025))}px MinBuri`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Drag the Ball!", W / 2, H / 2);
+    ctx.globalAlpha = 1;
   }
 
   requestAnimationFrame(render);

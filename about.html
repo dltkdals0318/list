@@ -1,54 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — li:St li/st [li]st</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="page">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — li:st li/st [li]st</title>
+    <style>
+@font-face {
+  font-family: "MinBuri";
+  src: url("addons/AG_Choijeongho_Minburi_Std_Bold.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #000000; --text: #e8e8e0; --muted: #c7c4ba; --lime: #dfe43b; --blue: #2e77a8; --green: #1db4a5; }
+::selection, ::-moz-selection { background: #dfe43b; color: #000000; }
+html, body { width: 100%; height: 100%; background: var(--bg); color: var(--text); font-family: "MinBuri", sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; hyphens: none; -webkit-hyphens: none; }
+body.page { overflow-y: auto; overflow-x: hidden; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 32px 40px; pointer-events: none; }
+.site-header .logo { font-size: clamp(20px, 2.6vw, 38px); font-weight: 900; color: var(--lime); text-decoration: none; pointer-events: auto; }
+.site-header nav { display: flex; gap: 36px; pointer-events: auto; }
+.nav-link { font-size: clamp(15px, 2.1vw, 30px); font-weight: 900; text-decoration: none; color: var(--text); transition: color 0.15s; }
+.nav-link:hover, .nav-link.active { color: var(--lime); }
+.about-hero { padding: 40px 40px clamp(80px, 10vw, 180px); text-align: center; }
+.about-hero h1 { display: inline-block; font-size: clamp(27px, 4.1vw, 60px); font-weight: 900; color: var(--lime); line-height: 1.05; transform: rotate(-10deg); transform-origin: center top; }
+.about-statement { padding: 32px 40px 48px; max-width: 680px; margin: 0 auto; text-align: center; }
+.about-statement p { font-size: clamp(18px, 1.5vw, 22px); font-weight: 400; line-height: 2; color: var(--text); word-break: keep-all; }
+.about-statement p + p { margin-top: 1.6em; }
+@media (max-width: 680px) {
+  .site-header { padding: 20px 24px; }
+  .about-hero, .about-statement { padding-left: 24px; padding-right: 24px; }
+}
+    </style>
+  </head>
+  <body class="page">
+    <header class="site-header">
+      <a class="logo" href="index.html">li:st li/st [li]st</a>
+      <nav>
+        <a class="nav-link active" href="about.html">About</a>
+        <a class="nav-link" href="works.html">Works</a>
+      </nav>
+    </header>
 
-  <header class="site-header">
-    <a class="logo" href="index.html">li:St</a>
-    <nav>
-      <a class="nav-link active" href="about.html">About</a>
-      <a class="nav-link" href="works.html">Works</a>
-    </nav>
-  </header>
+    <div style="height: 96px"></div>
 
-  <div style="height:96px"></div>
+    <section class="about-hero">
+      <h1>li:st li/st [li]st</h1>
+    </section>
 
-  <section class="about-hero">
-    <h1>li:St<br>li/st<br>[li]st</h1>
-    <div class="meta">
-      <span>11(Mon) – 16(Fri) May 2026</span>
-      <span>R7F Central &amp; West Gallery</span>
-    </div>
-  </section>
-
-  <section class="about-statement">
-    <p>
-      목록은 단순한 산물의 나열이 아니다. 우리가 무언가를 목록으로 만드는 순간, 우리는 그것에 형태를 부여하고 경계를 긋고 관계를 설정한다. 목록은 세계를 이해하는 방식이자, 동시에 세계를 편집하는 행위다.
-    </p>
-    <p>
-      그러나 우리 속에서 각각의 약품 이름, 장소의 주소, 사람의 이름들은 단지 데이터로 존재하지 않는다. 그것들은 기억이 되고, 몸이 되고, 관계가 된다. 목록화된 것들은 목록 밖에서도 계속해서 진동한다.
-    </p>
-    <p>
-      이번 전시 <em>li:St / li/st / [li]st</em>는 '목록'이라는 형식을 각자의 언어로 해석한 열다섯 명의 작업자가 모인 자리다. 콜론(:)으로 정의하고, 슬래시(/)로 나누고, 괄호([])로 감싸는 각각의 방식들—이 차이가 곧 이 전시의 내용이다.
-    </p>
-    <p>
-      배사 극위 시이를 이야이의 방식으로. 목록의 끝은 항상 열려 있다.
-    </p>
-  </section>
-
-  <div class="about-cta">
-    <a class="cta-link" href="works.html">
-      Works 보기
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </div>
-
-</body>
+    <section class="about-statement">
+      <p>
+        목록은 단순한 산물의 나열이 아니다. 우리가 무언가를 목록으로 만드는
+        순간, 우리는 그것에 형태를 부여하고 경계를 긋고 관계를 설정한다. 목록은
+        세계를 이해하는 방식이자, 동시에 세계를 편집하는 행위다.
+      </p>
+      <p>
+        그러나 우리 속에서 각각의 약품 이름, 장소의 주소, 사람의 이름들은 단지
+        데이터로 존재하지 않는다. 그것들은 기억이 되고, 몸이 되고, 관계가 된다.
+        목록화된 것들은 목록 밖에서도 계속해서 진동한다.
+      </p>
+      <p>
+        이번 전시 <em>li:st / li/st / [li]st</em>는 '목록'이라는 형식을 각자의
+        언어로 해석한 열다섯 명의 작업자가 모인 자리다. 콜론(:)으로 정의하고,
+        슬래시(/)로 나누고, 괄호([])로 감싸는 각각의 방식들—이 차이가 곧 이
+        전시의 내용이다.
+      </p>
+      <p>배사 극위 시이를 이야이의 방식으로. 목록의 끝은 항상 열려 있다.</p>
+    </section>
+  </body>
 </html>
