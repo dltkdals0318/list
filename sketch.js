@@ -219,7 +219,8 @@ function render() {
   ctx.fillRect(0, 0, W, H);
 
   const passes = [
-    { offset: 3, color: RING_COLORS[2] },
+    { offset: 4, color: RING_COLORS[2] },
+    { offset: 3, color: "#c8c2b6" },
     { offset: 2, color: RING_COLORS[1] },
     { offset: 1, color: RING_COLORS[0] },
     { offset: 0, color: "#ffffff" },
