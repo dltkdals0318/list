@@ -30,7 +30,7 @@ const RINGS = [
   },
   {
     color: "#2e77a8",
-    text: "11(mon) - 16(fri) May 2026  R7F central & west gallery  ",
+    text: "11(mon) - 15(fri) May 2026  R7F central & west gallery  ",
     speed: 0.00028,
     dir: 1,
   },
