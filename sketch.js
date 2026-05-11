@@ -239,7 +239,7 @@ function render() {
     if (hintFadeStart) hintAlpha = Math.max(0, 1 - (Date.now() - hintFadeStart) / 600);
     ctx.globalAlpha = hintAlpha;
     ctx.fillStyle = "#e8e8e0";
-    ctx.font = `900 ${Math.min(32, Math.max(18, W * 0.025))}px MinBuri`;
+    ctx.font = `900 ${Math.max(16, W * 0.018)}px MinBuri`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("Drag the Ball!", W / 2, H / 2);

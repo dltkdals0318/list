@@ -61,7 +61,7 @@ canvas {
   position: fixed;
   z-index: 100;
   left: 40px;
-  top: 140px;
+  top: 10vw;
   transform: rotate(-20deg);
   transform-origin: left top;
   display: flex;
@@ -76,7 +76,7 @@ canvas {
   font-family: "MinBuri", sans-serif;
   font-weight: 900;
   line-height: 1.15;
-  font-size: clamp(23px, 2.6vw, 38px);
+  font-size: clamp(23px, 2.6vw, 67px);
   color: var(--text);
 }
 
@@ -85,8 +85,8 @@ canvas {
 .page-nav {
   position: fixed;
   z-index: 100;
-  right: 52px;
-  top: 52px;
+  right: 2vw;
+  top: 2vw;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -99,7 +99,7 @@ canvas {
   font-family: "MinBuri", sans-serif;
   font-weight: 900;
   line-height: 1.15;
-  font-size: clamp(23px, 2.6vw, 34px);
+  font-size: clamp(21px, 2.3vw, 59px);
   color: var(--text);
   transition: color 0.15s;
 }
@@ -124,7 +124,7 @@ canvas {
 }
 
 .site-header .logo {
-  font-size: clamp(20px, 2.6vw, 38px);
+  font-size: clamp(20px, 2.6vw, 67px);
   font-weight: 900;
   color: var(--lime);
   text-decoration: none;
@@ -138,7 +138,7 @@ canvas {
 }
 
 .nav-link {
-  font-size: clamp(15px, 2.1vw, 30px);
+  font-size: clamp(14px, 1.9vw, 49px);
   font-weight: 900;
   text-decoration: none;
   color: var(--text);
@@ -153,13 +153,13 @@ canvas {
 /* ── about ────────────────────────────────────── */
 
 .about-hero {
-  padding: 40px 40px clamp(80px, 10vw, 180px);
+  padding: 7vw 40px 10vw;
   text-align: center;
 }
 
 .about-hero h1 {
   display: inline-block;
-  font-size: clamp(27px, 4.1vw, 60px);
+  font-size: clamp(27px, 4.1vw, 105px);
   font-weight: 900;
   color: var(--lime);
   line-height: 1.05;
@@ -168,14 +168,14 @@ canvas {
 }
 
 .about-statement {
-  padding: 32px 40px 48px;
-  max-width: 680px;
+  padding: 32px 40px 13vw;
+  max-width: vw;
   margin: 0 auto;
   text-align: center;
 }
 
 .about-statement p {
-  font-size: clamp(18px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 38px);
   font-weight: 400;
   line-height: 2;
   color: var(--text);
@@ -189,12 +189,12 @@ canvas {
 /* ── works ────────────────────────────────────── */
 
 .works-page-title {
-  padding: 110px 40px clamp(50px, 8vw, 120px);
+  padding: 10vw 40px 8vw;
 }
 
 .works-page-title h1 {
   display: inline-block;
-  font-size: clamp(27px, 4.1vw, 60px);
+  font-size: clamp(27px, 4.1vw, 105px);
   font-weight: 900;
   color: var(--text);
   line-height: 1;
@@ -223,7 +223,7 @@ canvas {
 }
 
 .item-num {
-  font-size: clamp(18px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 38px);
   font-weight: 900;
   color: var(--text);
   transition: color 0.12s;
@@ -232,7 +232,7 @@ canvas {
 }
 
 .item-title {
-  font-size: clamp(18px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 38px);
   font-weight: 900;
   color: var(--text);
   line-height: 1.05;
@@ -240,7 +240,7 @@ canvas {
 }
 
 .item-artist {
-  font-size: clamp(18px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 38px);
   font-weight: 400;
   color: var(--muted);
   text-align: right;
@@ -257,7 +257,7 @@ canvas {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-size: clamp(18px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 38px);
   font-weight: 900;
   text-decoration: none;
   color: var(--muted);
@@ -271,7 +271,7 @@ canvas {
 
 .work-detail-layout {
   display: grid;
-  grid-template-columns: minmax(0, 380px) 1fr;
+  grid-template-columns: minmax(0, 21vw) 1fr;
   gap: 72px;
   align-items: start;
 }
@@ -282,25 +282,29 @@ canvas {
   background: #000000;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 0 4px #2e77a8, 0 0 0 8px #1db4a5, 0 0 0 12px #c8c2b6, 0 0 0 16px #dfe43b;
+  box-shadow:
+    0 0 0 4px #2e77a8,
+    0 0 0 8px #1db4a5,
+    0 0 0 12px #c8c2b6,
+    0 0 0 16px #dfe43b;
 }
 
 .detail-title {
-  font-size: clamp(21px, 3vw, 42px);
+  font-size: clamp(21px, 3vw, 77px);
   font-weight: 900;
   line-height: 1;
   margin-bottom: 14px;
 }
 
 .detail-artist {
-  font-size: clamp(18px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 38px);
   font-weight: 900;
   color: var(--muted);
   margin-bottom: 56px;
 }
 
 .detail-desc {
-  font-size: clamp(18px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 38px);
   font-weight: 400;
   line-height: 2;
   color: var(--text);

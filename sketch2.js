@@ -1,7 +1,7 @@
 const W = window.innerWidth;
 const H = window.innerHeight;
 const CX = W / 2 + 100;
-const CY = H / 2 + 160;
+const CY = H / 2 + 220;
 
 const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
@@ -147,7 +147,7 @@ function drawHintArc() {
   if (hintAlpha <= 0) return;
   const hintR = maxR + ringW * 0.55;
   const text = "Scroll me!";
-  const fontSize = Math.max(10, ringW * 0.36);
+  const fontSize = Math.max(12, ringW * 0.37);
   ctx.font = `900 ${fontSize}px MinBuri`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -180,7 +180,7 @@ function drawHintArc() {
 // render
 
 function drawArcText(ring, startAngle) {
-  const fontSize = Math.max(12, ringW * 0.58);
+  const fontSize = Math.max(12, ringW * 0.52);
   ctx.font = `900 ${fontSize}px MinBuri`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
